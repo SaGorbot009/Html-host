@@ -1,11 +1,5 @@
 {
-  "name": "html-host-api",
+  "name": "html-host-vercel",
   "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
-  }
+  "dependencies": {}
 }
