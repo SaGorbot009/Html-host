@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>HTML Host Site</title>
+<style>
+  body { font-family: Arial; max-width: 600px; margin: 30px auto; }
+  input, textarea, button { width: 100%; margin: 8px 0; padding: 10px; border-radius: 6px; border: 1px solid #ccc; }
+  textarea { height: 200px; }
+  button { background: #0070f3; color: white; cursor: pointer; }
+  .link-box { margin-top: 15px; }
+</style>
+</head>
+<body>
+  <h2>Host Your HTML Page</h2>
+  <input type="text" id="filename" placeholder="Enter filename (example.html)" />
+  <textarea id="htmlcode" placeholder="Paste your HTML code here..."></textarea>
+  <button onclick="saveHTML()">Create Page</button>
+  <div id="result" class="link-box"></div>
+
+<script>
+async function saveHTML() {
+  const filename = document.getElementById('filename').value.trim();
+  const html = document.getElementById('htmlcode').value.trim();
+  if (!filename || !html) {
+    alert('Please enter filename and HTML code');
+    return;
+  }
+
+  const res = await fetch('/api/save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, html })
+  });
+  const data = await res.json();
+
+  if (data.message) {
+    document.getElementById('result').innerText = data.message + ' (filename: ' + data.filename + ')';
+  } else if (data.error) {
+    alert(data.error);
+  }
+}
+</script>
+</body>
+</html>
